@@ -10,3 +10,12 @@ class Player:
 
 	def makeMove(self, grid, selected, cell):
 		return self.piece.makeMove(grid, selected, cell)
+
+	def getPieceType(self):
+
+		from Dog import Dog
+		from Jaguar import Jaguar
+
+		if isinstance(self.piece, Dog):
+			return "dog"
+		return "jaguar"

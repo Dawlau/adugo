@@ -1,11 +1,12 @@
 class Game:
 
-	def __init__(self, screen):
+	def __init__(self, screen, player1, player2):
 
 		import copy, constants
 		from Player import Player
 		from Jaguar import Jaguar
 		from Dog import Dog
+		from Ai import Ai
 
 		self.screen = screen
 		self.screen.fill(constants.WHITE)
@@ -14,7 +15,24 @@ class Game:
 		self.adjacencyList = copy.deepcopy(constants.ADJACENCY_LIST)
 		self.selected = (None, None)
 
-		self.players = [Player(Jaguar()), Player(Dog())]
+		if isinstance(player1, Ai) and isinstance(player2, Ai):
+			player2.setHeuristic(2)
+
+		if player1.getPieceType() == "dog":
+			player1, player2 = player2, player1
+
+		if isinstance(player1, Player):
+			print("Player1: ", player1.getPieceType())
+		else:
+			print("Ai1: ", player1.getPieceType(), player1.algorithm, player1.difficulty, player1.heuristic)
+
+		if isinstance(player2, Player):
+			print("Player2: ", player2.getPieceType())
+		else:
+			print("Ai2: ", player2.getPieceType(), player2.algorithm, player2.difficulty, player2.heuristic)
+
+
+		self.players = [player1, player2]
 		self.turn = 0
 
 		self.mapCoordinates()
@@ -97,10 +115,10 @@ class Game:
 			endGame = Utilities.endGame(self.grid)
 			if endGame is not None:
 				print(endGame)
-				return False
+				return "exit", self.players[0], self.players[1]
 
 			if event.type == pygame.QUIT or pygame.key.get_pressed()[pygame.K_q]:
-				return False
+				return "exit", self.players[0], self.players[1]
 			else:
 
 				if isinstance(self.players[self.turn], Ai):
@@ -125,4 +143,4 @@ class Game:
 
 		pygame.display.flip()
 
-		return True
+		return "game", self.players[0], self.players[1]

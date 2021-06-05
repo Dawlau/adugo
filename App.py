@@ -18,8 +18,18 @@ class App:
 
 		from Game import Game
 
-		# game = Game(self.screen)
+		mode = "homescreen"
 		homescreen = Homescreen(self.screen)
 		while self.running:
-			self.running = homescreen.run()
+
+			if mode == "homescreen":
+				mode, player1, player2 = homescreen.run()
+				if mode != "homescreen":
+					game = Game(self.screen, player1, player2)
+			elif mode == "game":
+				mode, player1, player2 = game.run()
+				if mode != "game":
+					homescreen = Homescreen(self.screen)
+			else:
+				self.running = False
 			# self.running = game.run()

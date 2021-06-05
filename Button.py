@@ -24,6 +24,14 @@ class Button:
 	def getText(self):
 		return self.text
 
+	def setText(self, text):
+
+		import constants, pygame
+
+		self.text = text
+		self.renderedText = pygame.font.SysFont(self.font, self.fontDimension).render(self.text, True, constants.BLACK)
+		self.textRectangle = self.renderedText.get_rect(center = self.rectangle.center)
+
 	def pressed(self, clickCoords):
 		x, y = clickCoords
 		return self.bottomUp[0] <= x <= self.bottomUp[0] + self.height and self.bottomUp[1] <= y <= self.bottomUp[1] + self.width
