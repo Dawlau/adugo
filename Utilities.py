@@ -63,7 +63,7 @@ class Utilities:
 					cougarPos = (i, j)
 
 		if cntDogs < 10:
-			return "Cougar won"
+			return "Jaguar won"
 
 		import constants
 

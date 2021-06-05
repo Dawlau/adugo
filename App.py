@@ -1,3 +1,6 @@
+from Homescreen import Homescreen
+
+
 class App:
 
 	def __init__(self):
@@ -15,7 +18,8 @@ class App:
 
 		from Game import Game
 
-		game = Game(self.screen)
-
+		# game = Game(self.screen)
+		homescreen = Homescreen(self.screen)
 		while self.running:
-			self.running = game.run()
+			self.running = homescreen.run()
+			# self.running = game.run()
