@@ -1,3 +1,7 @@
+'''
+Class created for building the homescreen which is made of multiple buttons.
+Each button should have a size, text and background color in case the user checks the option.
+'''
 class Button:
 
 	def __init__(self, screen, bottomUp, text, outline = True):
@@ -42,7 +46,7 @@ class Button:
 	def getColor(self):
 		return self.color
 
-	def draw(self):
+	def draw(self): # draw the button
 
 		import pygame, constants
 

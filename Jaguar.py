@@ -10,7 +10,7 @@ class Jaguar:
 			return False
 		return grid[i][j] == 'j'
 
-	def makeMove(self, grid, selected, cell):
+	def makeMove(self, grid, selected, cell): # check if the move is valid
 
 		from Utilities import Utilities
 
@@ -41,7 +41,7 @@ class Jaguar:
 
 		return 0
 
-	def genJumps(self, grid, cell):
+	def genJumps(self, grid, cell): # gen the possible jumps for the jaguar
 
 		from Utilities import Utilities
 		from State import State
@@ -76,7 +76,7 @@ class Jaguar:
 
 		return jumps
 
-	def genAdjMoves(self, grid, cell):
+	def genAdjMoves(self, grid, cell): # gen adjacent moves for the jaguar
 
 		from Utilities import Utilities
 		from State import State
@@ -96,7 +96,11 @@ class Jaguar:
 
 		return states
 
-
+	'''
+	Generate moves for the jaguar.
+	First generate adjacent moves, then create a list of jumps that will have to generate another moves.
+	For every jump, generate the adjacent moves and add that state to the list of states, then try to generate more jumps for the jumps and so on until I reach and end.
+	'''
 	def genMoves(self, grid):
 
 		for i in range(len(grid)):

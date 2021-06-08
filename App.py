@@ -14,7 +14,7 @@ class App:
 
 		self.running = True
 
-	def run(self):
+	def run(self): # defines the flow of the app: homescreen -> game -> exit
 
 		from Game import Game
 

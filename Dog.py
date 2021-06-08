@@ -10,7 +10,7 @@ class Dog:
 			return False
 		return grid[i][j] == 'd'
 
-	def makeMove(self, grid, selected, cell):
+	def makeMove(self, grid, selected, cell): # check if move is valid
 
 		from Utilities import Utilities
 
@@ -23,6 +23,10 @@ class Dog:
 
 		return 1
 
+	'''
+	Generate moves for minimax and alpha-beta
+	Dogs can move only to adjacent nodes.
+	'''
 	def genMoves(self, grid):
 
 		from Utilities import Utilities

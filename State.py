@@ -1,3 +1,7 @@
+'''
+Defines a state in the minimax and alpha-beta algorithms.
+It is represented by the grid and the series of moves made.
+'''
 class State:
 
 	def __init__(self, grid, frm, to):

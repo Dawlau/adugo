@@ -1,6 +1,8 @@
 from Player import Player
 
-
+'''
+This class takes care of the homescreen flow
+'''
 class Homescreen:
 
 	def __init__(self, screen):
@@ -64,7 +66,7 @@ class Homescreen:
 
 		self.startButton.draw()
 
-	def getPressed(self, clickCoords):
+	def getPressed(self, clickCoords): # if a button was clicked set colors
 
 		import constants
 
@@ -126,7 +128,7 @@ class Homescreen:
 					self.player1PiecesButtons[0].setColor(constants.GREEN)
 					self.player1PiecesButtons[1].setColor(constants.WHITE)
 
-	def pickUpParameters(self):
+	def pickUpParameters(self): # if the user pressed the start button get the parameters
 
 		import constants
 		from Player import Player
@@ -177,7 +179,7 @@ class Homescreen:
 				elif player2Algo != "":
 					self.player2 = Ai(Dog(), player2Algo)
 
-	def runState0(self):
+	def runState0(self): # choose algorithm and piece to play with
 
 		import pygame, constants
 
@@ -204,7 +206,7 @@ class Homescreen:
 
 		return ("homescreen", self.player1, self.player2)
 
-	def drawState1(self):
+	def drawState1(self): # choose difficulty for Ai
 
 		import constants
 		from Ai import Ai
@@ -235,7 +237,7 @@ class Homescreen:
 
 			self.startButton.draw()
 
-	def state1_checkPressed(self, clickCoords):
+	def state1_checkPressed(self, clickCoords): # if button was pressed in the second state
 
 		import constants
 		from Ai import Ai

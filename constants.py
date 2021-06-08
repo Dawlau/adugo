@@ -16,10 +16,20 @@ SQUARE_SIDE_WIDTH = 5
 
 CIRCLE_RADIUS = 25
 
+# DEFAULT_GRID = [
+# 	['d', 'd', 'd', 'd', 'd'],
+# 	['d', 'd', 'd', 'd', 'd'],
+# 	['d', 'd', 'j', 'd', 'd'],
+# 	[None, None, None, None, None],
+# 	[None, None, None, None, None],
+# 	[None, None, None, None, None],
+# 	[None, None, None, None, None],
+# ]
+
 DEFAULT_GRID = [
+	['j', 'd', 'd', 'd', 'd'],
 	['d', 'd', 'd', 'd', 'd'],
-	['d', 'd', 'd', 'd', 'd'],
-	['d', 'd', 'j', 'd', 'd'],
+	[None, 'd', 'd', 'd', 'd'],
 	[None, None, None, None, None],
 	[None, None, None, None, None],
 	[None, None, None, None, None],

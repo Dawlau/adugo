@@ -10,14 +10,22 @@ class Ai:
 
 		self.eval = [self.eval1, self.eval2]
 
+		self.generatedNodes = 0
+
 
 	def selectPiece(self, grid, cell):
 		return self.piece.isValid(grid, cell)
 
+	'''
+	generate a cell base on the current grid configuration using minimax or alpha-beta
+	'''
 	def makeMove(self, grid):
+
+		self.generatedNodes = 0
 
 		from State import State
 
+		# set the depth of the game tree
 		if self.difficulty == "easy":
 			depth = 3
 		elif self.difficulty == "medium":
@@ -30,9 +38,11 @@ class Ai:
 		else:
 			state, score = self.alpha_beta(State(grid, None, None), self.piece, depth, max, -1000, 1000)
 
-		return state
+		return state, score, self.generatedNodes
 
-	def minimax(self, state, piece, depth, f):
+	def minimax(self, state, piece, depth, f): # minimax algorithm
+
+		self.generatedNodes += 1
 
 		if depth == 0:
 			return state, self.eval[self.heuristic](state, piece, f)
@@ -58,7 +68,9 @@ class Ai:
 
 		return bestState, bestScore
 
-	def alpha_beta(self, state, piece, depth, f, alpha, beta):
+	def alpha_beta(self, state, piece, depth, f, alpha, beta): # alpha-beta algorithm
+
+		self.generatedNodes += 1
 
 		from Utilities import Utilities
 
@@ -118,7 +130,16 @@ class Ai:
 		else:
 			return "jaguar"
 
+	'''
+	First evaluation function. Calculates score based on the number of dogs on the grid
+	There are 4 cases:
 
+	1) Jaguar - max: maximize number of eaten dogs
+		      - min: minimize number of dogs left in the grid
+
+	2) Dogs - max: maximize number of dogs left in the grid
+			- min: minimize number of eaten dogs
+	'''
 	def eval1(self, state, piece, f): # no of dogs
 
 		grid = state.getGrid()
@@ -143,7 +164,11 @@ class Ai:
 				return 14 - dogsCnt
 
 
+	'''
+	Second evaluation function. Calculates the score based on the number of adjacent dogs to the jaguar
 
+	jaguar wants to minimize this score while dogs want to maximize this score (so they can surround the jaguar)
+	'''
 	def eval2(self, state, piece, f): # no of dogs around jaguar
 
 		grid = state.getGrid()

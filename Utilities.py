@@ -1,3 +1,6 @@
+'''
+Service class for utility functions that I need throught the app
+'''
 class Utilities:
 
 	@staticmethod

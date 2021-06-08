@@ -1,3 +1,6 @@
+'''
+This class implementes the player logic
+'''
 class Player:
 
 	def __init__(self, piece):
