@@ -77,3 +77,8 @@ class Utilities:
 			return "Dogs won"
 
 		return None
+
+	@staticmethod
+	def inGrid(grid, cell):
+		i, j = cell
+		return 0 <= i < len(grid) and 0 <= j < len(grid[0])

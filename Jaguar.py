@@ -40,3 +40,110 @@ class Jaguar:
 			return 1
 
 		return 0
+
+	def genJumps(self, grid, cell):
+
+		from Utilities import Utilities
+		from State import State
+		import copy
+
+		i, j = cell
+
+		jumps = []
+		node = Utilities.cellToNode(grid, cell)
+
+		di = [-2, -2, -2, 0, 0, 2, 2, 2]
+		dj = [-2, 0, 2, -2, 2, -2, 0, 2]
+
+		for dir in range(len(di)):
+			newi = i + di[dir]
+			newj = j + dj[dir]
+
+			if Utilities.inGrid(grid, (newi, newj)):
+				if grid[newi][newj] is None:
+					inti = i + Utilities.sign(di[dir])
+					intj = j + Utilities.sign(dj[dir])
+
+					if grid[inti][intj] == 'd':
+						newNode = Utilities.cellToNode(grid, (newi, newj))
+						intNode = Utilities.cellToNode(grid, (inti, intj))
+
+						if newNode in self.adjacencyList[intNode] and intNode in self.adjacencyList[node]:
+							newGrid = copy.deepcopy(grid)
+							newGrid[i][j], newGrid[newi][newj] = newGrid[newi][newj], newGrid[i][j]
+							newGrid[inti][intj] = None
+							jumps.append([State(newGrid, (i, j), (newi, newj))])
+
+		return jumps
+
+	def genAdjMoves(self, grid, cell):
+
+		from Utilities import Utilities
+		from State import State
+		import copy
+		# print(cell)
+		i, j = cell
+
+		node = Utilities.cellToNode(grid, (i, j))
+
+		states = []
+		for nextNode in self.adjacencyList[node]:
+			k, l = Utilities.nodeToCell(grid, nextNode)
+			if grid[k][l] == None:
+				newGrid = copy.deepcopy(grid)
+				newGrid[i][j], newGrid[k][l] = newGrid[k][l], newGrid[i][j]
+				states.append([State(newGrid, (i, j), (k, l))])
+
+		return states
+
+
+	def genMoves(self, grid):
+
+		for i in range(len(grid)):
+			for j in range(len(grid[0])):
+				if self.isValid(grid, (i, j)):
+					jaguar = (i, j)
+
+		i, j = jaguar
+
+		from Utilities import Utilities
+		from State import State
+		import copy
+
+		node = Utilities.cellToNode(grid, (i, j))
+
+		states = self.genAdjMoves(grid, jaguar)
+		toRelax = self.genJumps(grid, jaguar)
+
+		while len(toRelax):
+			lStates = toRelax.pop()
+			state = lStates[-1]
+
+			cell = state.getTo()
+			grid = copy.deepcopy(state.getGrid())
+			for adj in self.genAdjMoves(grid, cell):
+				states.append(lStates + adj)
+
+			for jump in self.genJumps(grid, cell):
+				toRelax.append(lStates + jump)
+
+		return states
+
+	def eval(self, state):
+
+		state = state
+		grid = state.getGrid()
+
+		cnt = 0
+		for i in range(len(grid)):
+			for j in range(len(grid[0])):
+				if grid[i][j] == 'd':
+					cnt += 1
+
+		return 14 - cnt
+
+	def eval1(self, state):
+		pass
+
+	def eval2(self, state):
+		pass

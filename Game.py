@@ -64,6 +64,9 @@ class Game:
 
 		import pygame, constants
 		from Utilities import Utilities
+		import constants
+
+		self.screen.fill(constants.WHITE)
 
 		# draw segments
 		for node in range(len(self.grid) * len(self.grid[0])):
@@ -107,10 +110,11 @@ class Game:
 		import pygame, constants
 		from Ai import Ai
 		from Utilities import Utilities
+		import time
+		import copy
 
 		for event in pygame.event.get():
 
-			self.screen.fill(constants.WHITE)
 
 			endGame = Utilities.endGame(self.grid)
 			if endGame is not None:
@@ -122,7 +126,24 @@ class Game:
 			else:
 
 				if isinstance(self.players[self.turn], Ai):
-					pass
+					states = self.players[self.turn].makeMove(self.grid)
+
+					for state in states:
+
+
+						frm = state.getFrom()
+
+						self.selected = frm
+						self.drawGrid()
+
+						time.sleep(2)
+						self.grid = copy.deepcopy(state.getGrid())
+						self.drawGrid()
+
+
+					self.selected = (None, None)
+
+					self.turn ^= 1
 				elif event.type == pygame.MOUSEBUTTONDOWN:
 					clickCoords = event.pos
 

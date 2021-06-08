@@ -1,6 +1,3 @@
-from Utilities import Utilities
-
-
 class Dog:
 
 	def __init__(self):
@@ -25,3 +22,43 @@ class Dog:
 			return 0
 
 		return 1
+
+	def genMoves(self, grid):
+
+		from Utilities import Utilities
+		from State import State
+		import copy
+
+		states = []
+
+		for i in range(len(grid)):
+			for j in range(len(grid[0])):
+				if self.isValid(grid, (i, j)):
+					node = Utilities.cellToNode(grid, (i, j))
+
+					for nextNode in self.adjacencyList[node]:
+						k, l = Utilities.nodeToCell(grid, nextNode)
+						if grid[k][l] == None:
+							newGrid = copy.deepcopy(grid)
+							newGrid[i][j], newGrid[k][l] = newGrid[k][l], newGrid[i][j]
+							states.append([State(newGrid, (i, j), (k, l))])
+
+		return states
+
+	def eval(self, state):
+
+		grid = state.getGrid()
+
+		cnt = 0
+		for i in range(len(grid)):
+			for j in range(len(grid[0])):
+				if grid[i][j] == 'd':
+					cnt += 1
+
+		return cnt
+
+	def eval1(self, state):
+		pass
+
+	def eval2(self, state):
+		pass
