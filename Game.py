@@ -34,6 +34,7 @@ class Game:
 
 		self.players = [player1, player2]
 		self.turn = 0
+		self.animation = []
 
 		self.mapCoordinates()
 
@@ -102,6 +103,7 @@ class Game:
 					pygame.draw.circle(self.screen, constants.RED, center, radius)
 				pygame.draw.circle(self.screen, constants.GRAY, center, radius - 2)
 
+		pygame.display.flip()
 
 
 
@@ -118,6 +120,8 @@ class Game:
 
 			endGame = Utilities.endGame(self.grid)
 			if endGame is not None:
+
+				time.sleep(2)
 				print(endGame)
 				return "exit", self.players[0], self.players[1]
 
@@ -130,20 +134,19 @@ class Game:
 
 					for state in states:
 
-
 						frm = state.getFrom()
-
 						self.selected = frm
+
+						self.drawGrid()
+						time.sleep(1.5)
+						self.grid = state.getGrid()
+
 						self.drawGrid()
 
-						time.sleep(2)
-						self.grid = copy.deepcopy(state.getGrid())
-						self.drawGrid()
-
+					self.turn ^= 1
 
 					self.selected = (None, None)
 
-					self.turn ^= 1
 				elif event.type == pygame.MOUSEBUTTONDOWN:
 					clickCoords = event.pos
 
@@ -162,6 +165,6 @@ class Game:
 
 			self.drawGrid()
 
-		pygame.display.flip()
+
 
 		return "game", self.players[0], self.players[1]
