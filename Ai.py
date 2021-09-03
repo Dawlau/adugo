@@ -69,21 +69,44 @@ class Ai:
 		return bestState, bestScore
 
 	def alpha_beta(self, state, piece, depth, f, alpha, beta): # alpha-beta algorithm
-
+		import Utilities
+		from Jaguar import Jaguar
+		from Dog import Dog
 		self.generatedNodes += 1
 
-		from Utilities import Utilities
-
-		if depth == 0 or Utilities.endGame(state.getGrid()) is not None:
+		if depth == 0:
 			return state, self.eval[self.heuristic](state, piece, f)
+
+		eG = Utilities.endGame(state.getGrid())
+		if eG is not None:
+			if eG[0] == 'D': # dog wins
+				if isinstance(piece, Jaguar):
+					if f == min:
+						return state, 1000
+					else:
+						return state, -1000
+				else:
+					if f == min:
+						return state, -1000
+					else:
+						return state, 1000
+			else: # jaguar wins
+				if isinstance(piece, Jaguar):
+					if f == min:
+						return state, -1000
+					else:
+						return state, 1000
+				else:
+					if f == min:
+						return state, 1000
+					else:
+						return state, -1000
 
 		if alpha > beta:
 			return state, self.eval[self.heuristic](state, piece, f)
 
 		nextStates = piece.genMoves(state.getGrid())
 
-		from Jaguar import Jaguar
-		from Dog import Dog
 		import copy
 
 		nextPiece = Jaguar() if isinstance(piece, Dog) else Dog()
@@ -94,7 +117,7 @@ class Ai:
 
 		for nextState in nextStates:
 
-			_, aux = self.minimax(nextState[-1], nextPiece, depth - 1, nextF)
+			_, aux = self.alpha_beta(nextState[-1], nextPiece, depth - 1, nextF, alpha, beta)
 			a = f(aux, bestScore)
 
 			if a != bestScore:
