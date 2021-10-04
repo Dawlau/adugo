@@ -1,50 +1,35 @@
-# adugo
+# Adugo
 
-Global constants:
+This is an [Adugo](https://en.wikipedia.org/wiki/Adugo) game developed with [Python 3.8](https://www.python.org/) and [Pygame](https://www.pygame.org/news).
+The only difference between this and the original game is that in this version of the game, when the jaguar eats a dog it can make another move.
 
+## Features
+
+This game has 2 main parts: The homescreen and the actual game
+
+### Homescreen
+
+Here you can select what kind of player should control each type of piece(a human or an AI).
+If you select the AI for a specific piece, you can also set the difficulty for the AI.
+
+### The game
+
+Here, you can either play with another human or an AI, or you can watch two AI's confront each other.
+The game has a nice GUI, perfect for anyone that wants to try this old game.
+
+Good luck!
+
+Notes:
+
+The AI was programmed using the [minimax algorithm](https://en.wikipedia.org/wiki/Minimax) and optimized using [alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning).
+
+## How to run
+
+Run the run.sh script as follows:
 ```
-WIDTH, HEIGHT, CIRCLE_RADIUS, SQUARE_LENGTH, DEFAULT_GRID, GRAY, BLACK
-```
-
-
-## Grid drawing:
-
-
-```
-- create matrix of 7x5 representing the game table
-- each cell in the matrix will be a tuple ((character, selected); 'j' - for jaguar, 'd' - for dog and None for nothing)
-- map grid cell to number and reversed
-- create adjacency list for the grid
-- create matrix for on screen positions
-- create "Draw segment" function that draws a segment between a pair of grid cells
-(for circles use dx, dy differences to move the segment from origin to outside; to calculate dx, dy you should check where the second cell is relative to the first: up, down, left, right)
-
-- if the value is 'j' or 'd' draw the respective circles (first step)
-- draw the segments (based on adjancency list)
-```
-
-## Game logic:
-
-```
-- for jaguar jumps keep a variable called "turns" that won't decrement if the jaguar jumped
-- a move is considered done when "turns" is 0
-- for minimax and alpha beta, the next state is given by the board after a legal move
-```
-
-## Game interaction:
-
-```
-- when a player clicks on the screen get the click coordinates and check if the player clicked on a valid piece and if a piece is charged (before selecting a piece, unselect all the other pieces), wait for a click on another valid piece (in case the computer selected a piece place a timeout before actually moving the piece)
-- while in game, if the player presses backspace, go back to home screen
+./run.sh
 ```
 
-## Needed classes:
+## Final notes
 
-```
-App
-Homescreen
-Game
-Grid
-Player
-Ai
-```
+I hope you enjoy playing this Adugo game. If you find any bugs, feel free to submit them to blahoviciandrei1@gmail.com
